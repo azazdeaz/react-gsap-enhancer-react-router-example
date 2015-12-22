@@ -25,6 +25,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.3.13",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
     "babelify": "^7.2.0",
     "browser-sync": "^2.7.13",
     "browserify": "^12.0.1",
@@ -69,5 +70,8 @@
   "scripts": {
     "lint": "./node_modules/.bin/gulp lint",
     "test": "./node_modules/.bin/gulp test"
+  },
+  "dependencies": {
+    "react-gsap-enhancer": "^0.2.1"
   }
 }
