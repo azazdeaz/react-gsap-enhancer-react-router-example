@@ -3,24 +3,21 @@
 import React         from 'react';
 import {Link}        from 'react-router';
 import DocumentTitle from 'react-document-title';
+import GSAP          from 'react-gsap-enhancer';
 
 class LoginPage extends React.Component {
 
   constructor(props) {
      super(props)
-     this.state = {register: false}
+     console.log(props)
   }
 
   renderInput(label, name, type) {
     return <div className="input">
-       <label for={name}>{label}</label>
+       <label htmlFor={name}>{label}</label>
        <input type={type} name={name} id={name}/>
        <span className="spin"/>
     </div>
-  }
-
-  handleOpenClick = () => {
-    this.setState({register: !this.state.register})
   }
 
   componentDidMount() {
@@ -28,11 +25,21 @@ class LoginPage extends React.Component {
      this.switchAnim = this.addAnimation(switchAnim)
   }
 
+  getCurrentPage() {
+    return this.props.location.pathname.indexOf('register') === -1
+      ? 'login'
+      : 'register'
+  }
+
   componentDidUpdate() {
-     this.switchAnim.tweenTo(this.state.register ? 'register' : 'login')
+     console.log('did update', this.props)
+     this.switchAnim.tweenTo(this.getCurrentPage())
   }
 
   render() {
+    const pathTo =
+      `/${this.getCurrentPage() === 'register' ? 'login' : 'register'}`
+
     return (
       <DocumentTitle title="Login">
         <div className="materialContainer">
@@ -41,15 +48,17 @@ class LoginPage extends React.Component {
               {this.renderInput('Username', 'name', 'text')}
               {this.renderInput('Password', 'pass', 'password')}
               <div className="button login">
-                 <button><span>GO</span> <i className="fa fa-check"></i></button>
+                 <button><span>GO</span><i className="fa fa-check"></i></button>
               </div>
               <a href="" className="pass-forgot">Forgot your password?</a>
            </div>
 
            <div className="overbox">
-              <div key="switch" className="material-button alt-2" onClick={this.handleOpenClick}>
-                 <span className="shape"/>
-              </div>
+              <Link to={pathTo}>
+                <div name="switch" className="material-button alt-2">
+                   <span className="shape"/>
+                </div>
+              </Link>
               <div className="register-content">
                 <div className="title">REGISTER</div>
                 {this.renderInput('Username', 'regname', 'text')}
@@ -66,7 +75,7 @@ class LoginPage extends React.Component {
   }
 }
 
-export default LoginPage;
+export default GSAP()(LoginPage);
 
 
 //Based on http://codepen.io/yusufbkr/pen/RPBQqg/
@@ -90,7 +99,7 @@ function switchAnim({target}) {
    const registerContent = target
       .find({className: 'register-content'})
       .findAllInChildren()
-   const switchButton = target.find('switch')
+   const switchButton = target.find({name: 'switch'})
 
    return new TimelineMax()
       .pause()

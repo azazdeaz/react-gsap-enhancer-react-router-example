@@ -1,5 +1,8 @@
 'use strict';
 
+//load global GSAP
+require('gsap')
+
 import React     from 'react';
 import ReactDOM  from 'react-dom';
 

@@ -11,15 +11,9 @@ import NotFoundPage                from './pages/NotFoundPage';
 
 export default (
   <Router history={CreateBrowserHistory()}>
-    <Route path="/" component={App}>
-
-      <IndexRoute component={HomePage} />
-
-      <Route path="/login" component={LoginPage} />
-      <Route path="/register" component={LoginPage} />
-
-      <Route path="*" component={NotFoundPage} />
-
-    </Route>
+    <Route path="/" component={LoginPage} />
+    <Route path="/login" component={LoginPage} />
+    <Route path="/register" component={LoginPage} />
+    <Route path="*" component={NotFoundPage} />
   </Router>
 );
